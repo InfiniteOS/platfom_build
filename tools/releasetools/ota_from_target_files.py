@@ -483,6 +483,26 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   if "selinux_fc" in OPTIONS.info_dict:
     WritePolicyConfig(OPTIONS.info_dict["selinux_fc"], output_zip)
 
+	build = GetBuildProp("ro.build.version.release", OPTIONS.info_dict)
+	date = GetBuildProp("ro.build.date", OPTIONS.info_dict)
+	version = GetBuildProp("ro.infinite.version", OPTIONS.info_dict)
+	
+	
+	if GetBuildProp("ro.product.model", OPTIONS.info_dict) is not None:
+	  model = GetBuildProp("ro.product.model", OPTIONS.info_dict)
+	  script.Print("------------------------------------------------");
+	  script.Print("-----------InfiniteOS for %s"%(model)-----------");
+	  script.Print("---------AOSP Version: %s"%(build)--------------");
+	  script.Print("-----------Compiled on: %s"%(date)--------------");
+	  script.Print("------------------------------------------------");
+	else:
+	  name = GetBuildProp("ro.product.name", OPTIONS.info_dict)
+	  script.Print("------------------------------------------------");
+	  script.Print("-----------InfiniteOS for %s"%(name)------------");
+	  script.Print("---------AOSP Version: %s"%(build)--------------");
+	  script.Print("-----------Compiled on: %s"%(date)--------------");
+	  script.Print("------------------------------------------------");
+	  
   recovery_mount_options = OPTIONS.info_dict.get("recovery_mount_options")
 
   script.ShowProgress(system_progress, 0)
@@ -563,7 +583,8 @@ def GetBuildProp(prop, info_dict):
   try:
     return info_dict.get("build.prop", {})[prop]
   except KeyError:
-    raise common.ExternalError("couldn't find %s in build.prop" % (prop,))
+    print ("WARNING: could not find %s in build.prop" % (prop,))
+  return None
 
 
 def HandleDowngradeMetadata(metadata):

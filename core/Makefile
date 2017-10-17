@@ -2525,8 +2525,16 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) \
 	   $(if $(OEM_OTA_CONFIG), -o $(OEM_OTA_CONFIG)) \
 	   $(BUILT_TARGET_FILES_PACKAGE) $@
 
-.PHONY: otapackage
+	   
+INFINITE_TARGET_PACKAGE := $(PRODUCT_OUT)/$(INF_VERSION).zip
+
+.PHONY: otapackage rum bacon
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
+rum: bacon
+bacon: otapackage
+		$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(INFINITE_TARGET_PACKAGE)
+		$(hide) $(MD5SUM) $(INFINITE_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(INFINITE_TARGET_PACKAGE).md5sum
+		@echo "Package Complete: $(INFINITE_TARGET_PACKAGE)" >&2
 
 endif    # build_ota_package
 

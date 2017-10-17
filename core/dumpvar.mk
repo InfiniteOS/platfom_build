@@ -97,7 +97,7 @@ endif
 
 ifneq ($(filter report_config,$(DUMP_MANY_VARS)),)
 # Construct the shell commands that print the config banner.
-report_config_sh := echo '============================================';
+report_config_sh := echo '=================InfiniteOS=================';
 report_config_sh += $(foreach v,$(print_build_config_vars),echo '$v=$($(v))';)
 report_config_sh += echo '============================================';
 endif
@@ -124,7 +124,7 @@ endif
 endif # CALLED_FROM_SETUP
 
 ifneq ($(PRINT_BUILD_CONFIG),)
-$(info ============================================)
+$(info =================InfiniteOS=================)
 $(foreach v, $(print_build_config_vars),\
   $(info $v=$($(v))))
 $(info ============================================)

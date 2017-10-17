@@ -1690,4 +1690,4 @@ addcompletions
 
 export ANDROID_BUILD_TOP=$(gettop)
 
-. $(gettop)/vendor/infinite/tools/ota.sh
+#. $(gettop)/vendor/infinite/tools/ota.sh

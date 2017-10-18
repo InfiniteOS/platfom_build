@@ -484,25 +484,23 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   # by the recovery program.
   if "selinux_fc" in OPTIONS.info_dict:
     WritePolicyConfig(OPTIONS.info_dict["selinux_fc"], output_zip)
-
-	build = GetBuildProp("ro.build.version.release", OPTIONS.info_dict)
-	date = GetBuildProp("ro.build.date", OPTIONS.info_dict)
-	version = GetBuildProp("ro.infinite.version", OPTIONS.info_dict)
-	
-	
+		
 	if GetBuildProp("ro.product.model", OPTIONS.info_dict) is not None:
+		buildid = GetBuildProp("ro.infinite.display.version", OPTIONS.info_dict)
+                buildidn = GetBuildProp("ro.build.id", OPTIONS.info_dict)
+                buildday = GetBuildProp("ro.build.date", OPTIONS.info_dict)
 	  model = GetBuildProp("ro.product.model", OPTIONS.info_dict)
 	  script.Print("------------------------------------------------");
 	  script.Print("-----------InfiniteOS for %s"%(model)-----------");
-	  script.Print("---------AOSP Version: %s"%(build)--------------");
-	  script.Print("-----------Compiled on: %s"%(date)--------------");
+	  script.Print("---------Infinite Version: %s"%(buildid)--------------");
+	  script.Print("-----------Compiled on: %s"%(buildday)--------------");
 	  script.Print("------------------------------------------------");
 	else:
 	  name = GetBuildProp("ro.product.name", OPTIONS.info_dict)
 	  script.Print("------------------------------------------------");
 	  script.Print("-----------InfiniteOS for %s"%(name)------------");
-	  script.Print("---------AOSP Version: %s"%(build)--------------");
-	  script.Print("-----------Compiled on: %s"%(date)--------------");
+	  script.Print("---------AOSP Version: %s"%(buildid)--------------");
+	  script.Print("-----------Compiled on: %s"%(buildday)--------------");
 	  script.Print("------------------------------------------------");
 	  
   recovery_mount_options = OPTIONS.info_dict.get("recovery_mount_options")
